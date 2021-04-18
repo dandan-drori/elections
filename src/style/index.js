@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 * {
@@ -10,8 +10,9 @@ html {
   scroll-behavior: smooth;
 }
 body {
-font-family: sans-serif;
+  font-family: sans-serif;
+  overflow: hidden;
 }
-`
+`;
 
-export default GlobalStyle
+export default GlobalStyle;

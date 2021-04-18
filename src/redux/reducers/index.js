@@ -1,12 +1,20 @@
 import { combineReducers } from "redux";
+import store from "../store";
 
-const tasks = (
-  state = [
-    { header: "header", content: "content", isComplete: false },
-    { header: "header2", content: "content2", isComplete: false },
-  ],
-  { type, payload }
-) => {
+const { auth: authState, charts: chartsState } = store;
+
+const auth = (state = authState, { type, payload }) => {
+  switch (type) {
+    case "LOGIN":
+      return { ...state, isAuthenticated: true };
+    case "SIGNOUT":
+      return { ...state, isAuthenticated: false };
+    default:
+      return state;
+  }
+};
+
+const charts = (state = chartsState, { type, payload }) => {
   switch (type) {
     case "SET_TASK_HEADER":
       return [...state, { header: payload }];
@@ -24,6 +32,6 @@ const tasks = (
       return state;
   }
 };
-const reducer = combineReducers({ tasks });
+const reducer = combineReducers({ auth, charts });
 
 export default reducer;

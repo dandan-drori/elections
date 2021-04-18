@@ -13,3 +13,7 @@ export const deleteTask = (taskContent) => {
 export const toggleCompleteTask = (taskContent) => {
   return { type: "TOGGLE_COMPLETE_TASK", payload: taskContent };
 };
+
+export const login = () => {
+  return { type: "LOGIN" };
+};

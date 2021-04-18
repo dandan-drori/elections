@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { deleteTask } from "../redux/actions/actions";
+import { deleteTask } from "../redux/actions";
 import Status from "./Status";
 
 const Task = ({ header, content, isComplete }) => {

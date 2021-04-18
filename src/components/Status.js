@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { toggleCompleteTask } from "../redux/actions/actions";
+import { toggleCompleteTask } from "../redux/actions";
 
 const Status = ({ content, isComplete }) => {
   const dispatch = useDispatch();

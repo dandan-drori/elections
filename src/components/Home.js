@@ -1,18 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Preview from "./Preview";
 
 const Home = () => {
   return (
     <Wrapper>
       <Container>
-        <Header>Hello Dandan,</Header>
-        <SubHeader>It's good to have you back!</SubHeader>
+        <Header>Elections - data made simple</Header>
+        <SubHeader>
+          <Visualize>Visualize</Visualize> real-time data and analyze it
+        </SubHeader>
         <List>
           <ListItem>
-            <StyledLink to="/tasks">My Tasks</StyledLink>
+            <StyledLink to="/charts">Start now!</StyledLink>
           </ListItem>
         </List>
+        <Preview />
       </Container>
     </Wrapper>
   );
@@ -32,7 +36,7 @@ const Container = styled.div`
 
   @media (max-width: 768px) {
     padding: 2rem;
-    padding-top: 4rem;
+    padding-top: 6rem;
   }
 `;
 
@@ -48,6 +52,15 @@ const Header = styled.p`
   @media (max-width: 768px) {
     font-size: 3.5rem;
     margin-bottom: 3rem;
+  }
+`;
+
+const Visualize = styled.span`
+  color: magenta;
+  font-size: 2rem;
+
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
   }
 `;
 
@@ -75,6 +88,10 @@ const ListItem = styled.li`
 const StyledLink = styled(Link)`
   color: #ededed;
   font-size: 1.5rem;
+
+  &:hover {
+    color: #ccc;
+  }
 `;
 
 export default Home;

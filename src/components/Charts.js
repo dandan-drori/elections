@@ -3,9 +3,21 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 const Charts = () => {
+  const chartsData = useSelector((state) => state.charts);
+
   return (
     <Wrapper>
-      <Container></Container>
+      <Container>
+        <Header>Charts</Header>
+        <List>
+          {chartsData.map(({ header, content }) => (
+            <ChartBox>
+              <ChartHeader>{header}</ChartHeader>
+              <Content>{content}</Content>
+            </ChartBox>
+          ))}
+        </List>
+      </Container>
     </Wrapper>
   );
 };
@@ -23,7 +35,7 @@ const Container = styled.div`
   padding-top: 7rem;
 
   @media (max-width: 768px) {
-    padding-top: 4rem;
+    padding-top: 6rem;
   }
 `;
 
@@ -43,34 +55,36 @@ const Header = styled.p`
 `;
 
 const List = styled.ul`
-  width: 100vw;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100vw;
+  padding: 3rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 0.5rem;
+  }
 `;
 
-const NoTasks = styled.div`
-  color: #ededed;
-  font-size: 2rem;
-  margin-bottom: 3rem;
-  margin-top: 4rem;
+const ChartBox = styled.div`
+  border: 2px solid magenta;
+  padding: 3.5rem 3rem;
+  margin: 0.5rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
-const AddMore = styled.div`
-  color: #ededed;
-  font-size: 2rem;
+const ChartHeader = styled.p`
+  color: #fefefe;
+  font-size: 1.5em;
+  line-height: 1.4;
 `;
 
-const AddTask = styled.button`
-  font-size: 3em;
-  margin-bottom: 2rem;
-  color: #ededed;
-  cursor: pointer;
-  width: 4rem;
-  height: 4rem;
-  background-color: #806c00;
-  outline: none;
-  border-radius: 50%;
-  border: none;
+const Content = styled.p`
+  color: #fefefe;
+  font-size: 1.2em;
+  line-height: 1.6;
 `;
