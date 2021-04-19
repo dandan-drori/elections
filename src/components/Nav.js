@@ -1,8 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { handleSignout } from "../helpers";
+import { signout } from "../redux/actions";
+import api from "../api";
 
 const Nav = () => {
+  const dispatch = useDispatch();
+  const isUserAuthenticated = useSelector(
+    (state) => state.auth.isAuthenticated
+  );
+  const email = localStorage.getItem("userEmail");
+
   return (
     <Wrapper>
       <Container>
@@ -15,7 +25,15 @@ const Nav = () => {
             <StyledLink to="/charts">Charts</StyledLink>
           </Item>
           <Item>
-            <StyledButton to="/signup">Sign Up</StyledButton>
+            {isUserAuthenticated ? (
+              <SignoutButton
+                onClick={() => handleSignout(api, dispatch, signout, email)}
+              >
+                Sign Out
+              </SignoutButton>
+            ) : (
+              <StyledButton to="/signup">Sign Up</StyledButton>
+            )}
           </Item>
         </List>
       </Container>
@@ -87,6 +105,25 @@ const StyledButton = styled(Link)`
   &:hover {
     color: #ff44aa;
     background-color: transparent;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+`;
+
+const SignoutButton = styled.button`
+  font-size: 1.5rem;
+  text-decoration: none;
+  border: 1px solid #d4b300;
+  background-color: #806c00;
+  color: #d4b300;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.5rem;
+
+  &:hover {
+    color: #806c00;
+    background-color: #d4b300;
   }
 
   @media (max-width: 768px) {

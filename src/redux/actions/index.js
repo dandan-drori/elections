@@ -17,3 +17,7 @@ export const toggleCompleteTask = (taskContent) => {
 export const login = () => {
   return { type: "LOGIN" };
 };
+
+export const signout = () => {
+  return { type: "SIGNOUT" };
+};

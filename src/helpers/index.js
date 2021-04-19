@@ -19,3 +19,10 @@ export const validate = (values) => {
 
   return errors;
 };
+
+export const handleSignout = async (api, dispatch, signoutAction, email) => {
+  const response = await api.delete("./login", { data: { email: email } });
+  localStorage.removeItem("userEmail");
+  dispatch(signoutAction());
+  console.log(response?.data?.message);
+};

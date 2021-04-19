@@ -11,7 +11,7 @@ const Charts = () => {
         <Header>Charts</Header>
         <List>
           {chartsData.map(({ header, content }) => (
-            <ChartBox>
+            <ChartBox key={header}>
               <ChartHeader>{header}</ChartHeader>
               <Content>{content}</Content>
             </ChartBox>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import GlobalStyle from "../style";
 import Home from "./Home";
@@ -9,8 +9,20 @@ import Signup from "./Signup";
 import PrivateRoute from "./PrivateRoute";
 import { ThemeProvider } from "styled-components";
 import theme from "../style/theme";
+import useLocalStorage from "../hooks/useLocalStorage";
+import api from "../api";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/actions";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const isUserAuthenticated = useLocalStorage(api);
+
+  useEffect(() => {
+    if (isUserAuthenticated) {
+      dispatch(login());
+    }
+  }, [isUserAuthenticated, dispatch]);
   return (
     <Router>
       <GlobalStyle />

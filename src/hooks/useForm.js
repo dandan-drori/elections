@@ -10,6 +10,7 @@ const useForm = (validate, submitAction, api) => {
   const [errors, setErrors] = useState({});
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiResponse, setApiResponse] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,23 +21,10 @@ const useForm = (validate, submitAction, api) => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = values;
     setErrors(validate(values));
     setIsSubmitting(true);
-
-    const indexOfAt = email.search("@");
-    const name = email.slice(0, indexOfAt);
-    const uppercasedName = name.charAt(0).toUpperCase() + name.slice(1);
-    const response = await api.post("/login", [
-      {
-        name: uppercasedName,
-        email,
-        password,
-      },
-    ]);
-    console.log(response);
   };
 
   const showHidePassword = () => {
@@ -44,10 +32,32 @@ const useForm = (validate, submitAction, api) => {
   };
 
   useEffect(() => {
-    if (Object.keys(errors).length === 0 && isSubmitting) {
-      dispatch(submitAction);
-    }
-  }, [errors]);
+    const { email, password } = values;
+    const makeApiCall = async () => {
+      const indexOfAt = email.search("@");
+      const name = email.slice(0, indexOfAt);
+      const uppercasedName = name.charAt(0).toUpperCase() + name.slice(1);
+      const response = await api.post("/login", [
+        {
+          name: uppercasedName,
+          email,
+          password,
+        },
+      ]);
+      return response?.data?.message;
+    };
+    const asyncApiCall = async () => {
+      if (Object.keys(errors).length === 0 && isSubmitting) {
+        const response = await makeApiCall();
+        setApiResponse(response);
+        if (response === "Login Successful") {
+          localStorage.setItem("userEmail", email);
+          dispatch(submitAction());
+        }
+      }
+    };
+    asyncApiCall();
+  }, [errors, api, dispatch, isSubmitting, submitAction]);
 
   return {
     values,
@@ -56,6 +66,7 @@ const useForm = (validate, submitAction, api) => {
     isPasswordHidden,
     handleChange,
     handleSubmit,
+    apiResponse,
   };
 };
 

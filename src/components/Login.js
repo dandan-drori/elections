@@ -9,9 +9,7 @@ import api from "../api";
 
 const Login = () => {
   const { state } = useLocation();
-
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
   const {
     values,
     errors,
@@ -19,6 +17,7 @@ const Login = () => {
     isPasswordHidden,
     handleChange,
     handleSubmit,
+    apiResponse,
   } = useForm(validate, login, api);
 
   if (isAuthenticated) {
@@ -30,6 +29,7 @@ const Login = () => {
       <Container>
         <Form>
           <FormHeader>Log In</FormHeader>
+          {apiResponse && <Response>{apiResponse}</Response>}
           <Label>Email: </Label>
           <Input
             type="email"
@@ -86,8 +86,8 @@ const Container = styled.div`
 
 const Form = styled.form`
   text-align: initial;
-  width: 25%;
-  height: 75%;
+  display: inline-block;
+  min-width: 20rem;
   margin: 0 auto;
   background-color: #fefefe;
   border-radius: 1rem;
@@ -163,6 +163,13 @@ const Error = styled.p`
   margin-bottom: 0.5rem;
   font-weight: 600;
   font-size: 0.8em;
+`;
+
+const Response = styled.p`
+  color: #ff0000;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  font-size: 1em;
 `;
 
 export default Login;
